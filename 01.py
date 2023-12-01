@@ -1,10 +1,6 @@
 import sys
 import readInput
 
-def rreplace(s, old, new, occurrence):
-    li = s.rsplit(old, occurrence)
-    return new.join(li)
-
 trans = {
         'one' : '1',
         'two' : '2',
@@ -69,8 +65,8 @@ def day1():
 
         p2 += int(f + sc);
     
-    print(p1)
-    print(p2)
+    print("day 1 p1:", p1)
+    print("day 1 p2:", p2)
 
 if __name__ == "__main__":
     day1()
