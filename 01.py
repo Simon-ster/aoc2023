@@ -59,7 +59,7 @@ def day1():
                 v = k
 
         if (v != ''):
-            ll = rreplace(ll, v,trans[v],1)
+            ll = readInput.rreplace(ll, v,trans[v],1)
         s = ''.join(x for x in ll if x.isdigit());
         sc = s[-1]
 
