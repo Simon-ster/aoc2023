@@ -8,7 +8,6 @@ import Data.Foldable
 import Data.List.Split
 import Debug.Trace
 
-
 getMaxColor s | s == "red" = 12
               | s == "blue" = 14
               | s == "green" = 13
