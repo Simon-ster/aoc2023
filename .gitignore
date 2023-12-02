@@ -1,3 +1,8 @@
 *.key
 input
 __pycache__
+
+*.o
+*.hi
+!*.hs
+
