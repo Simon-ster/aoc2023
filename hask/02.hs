@@ -9,10 +9,6 @@ import Data.List.Split
 import Debug.Trace
 
 
-maxred = 12
-maxblue = 14
-maxgreen = 13
-
 getMaxColor s | s == "red" = 12
               | s == "blue" = 14
               | s == "green" = 13
@@ -31,25 +27,17 @@ line f s | res == Nothing = 0
          | otherwise = fromJust res
     where res = f s
 
-validRed x | (last s == "red") = ((read $ head s) <= maxred )
+validColor c x | (last s == c) = ((read $ head s) <= getMaxColor c)
            | otherwise = True
            where s = words $ x
 
-validGreen x | (last s == "green") = ((read $ head s) <= maxgreen)
-             | otherwise = True
-            where s = words $ x
-
-validBlue x | (last s == "blue") = ((read $ head s) <= maxblue)
-            | otherwise = True
-            where s = words $ x
-
-validColor s =
-    (and $ validRed <$> splitOn "," s) &&
-    (and $ validGreen <$> splitOn "," s) && 
-    (and $ validBlue <$> splitOn "," s)
+validColors s =
+    (and $ validColor "red" <$> splitOn "," s) &&
+    (and $ validColor "green" <$> splitOn "," s) && 
+    (and $ validColor "blue"<$> splitOn "," s)
 
 part1 (n,s) 
-    | and $ validColor <$> splitOn ";" colors = Just n
+    | and $ validColors <$> splitOn ";" colors = Just n
     | otherwise = Nothing
     where colors = last $ splitOn ":" s
 
