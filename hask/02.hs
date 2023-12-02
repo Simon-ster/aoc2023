@@ -9,8 +9,8 @@ import Data.List.Split
 import Debug.Trace
 
 
+getMaxColor "blue" = 14
 getMaxColor s | s == "red" = 12
-              | s == "blue" = 14
               | s == "green" = 13
               | otherwise = 0
 
@@ -20,25 +20,20 @@ main = do
     print $ solve part1 contents
     print $ solve part2 contents
 
-solve f = sum . map (line f) . zip [1..] . lines
+solve f = sum . map f . zip [1..] . lines
 
-line :: (Eq a, Eq b, Num a) => ((a,b) -> Maybe a) -> (a,b) -> a
-line f s | res == Nothing = 0
-         | otherwise = fromJust res
-    where res = f s
+validColor c x =
+    last s /= c ||
+    read (head s) <= getMaxColor c
+  where s = words x
 
-validColor c x | (last s == c) = ((read $ head s) <= getMaxColor c)
-           | otherwise = True
-           where s = words $ x
+validColors s = and $
+    validColor <$> rgb <*> splitOn "," s
+  where rgb = words "red green blue"
 
-validColors s =
-    (and $ validColor "red" <$> splitOn "," s) &&
-    (and $ validColor "green" <$> splitOn "," s) && 
-    (and $ validColor "blue"<$> splitOn "," s)
-
-part1 (n,s) 
-    | and $ validColors <$> splitOn ";" colors = Just n
-    | otherwise = Nothing
+part1 (n,s)
+    | and $ validColors <$> splitOn ";" colors = n
+    | otherwise = 0
     where colors = last $ splitOn ":" s
 
 getMax i []       = 0
@@ -50,9 +45,9 @@ getMax i (n:c:cs) | i == c = max (read n) (getMax i cs)
 minColors s = (red, blue, green)
     where red   = getMax "red"   s
           blue  = getMax "blue"  s
-          green = getMax "green" s 
+          green = getMax "green" s
 
-power s = Just (r * g * b)
+power s = r * g * b
       where (r,g,b) = minColors $ words $ concat $ splitOn "," s
 
 part2 (n,s) = power $ concat $ splitOn ";" colors
