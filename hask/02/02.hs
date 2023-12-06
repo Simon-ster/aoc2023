@@ -15,7 +15,7 @@ getMaxColor s | s == "red" = 12
               | otherwise = 0
 
 main = do
-    contents <- readFile "../input/2.txt"
+    contents <- readFile "../../input/2.txt"
 
     print $ solve part1 contents
     print $ solve part2 contents
