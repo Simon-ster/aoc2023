@@ -44,12 +44,9 @@ findSecond [(v,ps)] set | posIn set ps = [v]
 findSecond ((v,ps):ns) set | posIn set ps = v : findSecond ns set
                            | otherwise    = findSecond ns set
 
-
 posIn set ps = any (`S.member` set) ps
 
-
 surrounds (x,y) = (\a b -> (x+a,y+b)) <$> [-1..1] <*> [-1..1]
-
 
 nearbySymbol symbols input = not $ F.null $ L.filter inSymbols $ concat $ surrounds <$> positions 
             where 
