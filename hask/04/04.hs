@@ -30,9 +30,8 @@ part2 copyList (s:ss) = copies + part2 newCopies ss
           matchList = ZipList $ replicate matches copies ++ repeat 0
           newCopies = getZipList $ pure (+) <*> restCopies <*> matchList
 
-numMatches s = mems
+numMatches s = foldr (\x -> if x `member` wins then (+1) else (+0)) 0 mine
     where (wins,mine) = parseInput s
-          mems = foldr (\x -> if x `member` wins then (+1) else (+0)) 0 mine
 
 parseInput ss = (wins,mine)
     where [w,m] = words <$> splitOn "|" ss
